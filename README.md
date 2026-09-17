@@ -1,94 +1,323 @@
-Library
-/
-README_Assignment_8_GitHub_Safe_Final.md
-
-
 🔴 API Data Fetcher with Local Cache
 Flutter Assignment 8
-Fetch data from a public REST API, display it using FutureBuilder, and cache the last successful result using SharedPreferences.
-A simple Flutter API dashboard built to understand how a Flutter application communicates with an external REST API, handles asynchronous data, and keeps a local copy of the latest successful response.
-📌 Project Overview
-API Data Fetcher connects to the JSONPlaceholder REST API and retrieves post data using an HTTP GET request.
-The application then follows this flow:
+A Flutter application that fetches data from a public REST API,
+displays it using FutureBuilder, and caches the latest successful
+result using SharedPreferences.
+📌 1. Project Overview
+API Data Fetcher is a Flutter project created for Assignment 8.
+The main purpose of this project is to understand API integration
+and local data caching in a Flutter application.
 
-REST API
-   ↓
-HTTP GET Request
-   ↓
-JSON Response
-   ↓
-Dart Model
-   ↓
-FutureBuilder
-   ↓
-Display Data
-   ↓
-SharedPreferences
-   ↓
-Local Cache
-If the API is temporarily unavailable, the application checks the locally stored result and displays the cached data instead.
-✨ Features
-🌐 Fetch posts from a public REST API
-⚡ Handle asynchronous requests with FutureBuilder
-🔄 Refresh the latest API data
-💾 Cache the last successful result
-📦 Store cached data using SharedPreferences
-📴 Display cached data when the API request fails
-⚠️ Handle loading and error states
-🔃 Pull-to-refresh support
-🎨 Clean black and red dashboard UI
-📱 Responsive Flutter layout
-🧩 Convert JSON responses into Dart model objects
-🎯 Assignment Requirements
-Public REST API: JSONPlaceholder
-API Request: HTTP GET
-Display API Data: Post cards
-Asynchronous Handling: FutureBuilder
-Local Caching: SharedPreferences
-Cache Fallback: Shows last successful result
-Error Handling: Retry screen
-Refresh: Refresh button + pull-to-refresh
-🌐 API Used
-This project uses JSONPlaceholder, a free REST API commonly used for testing and learning.
-API Details
-API: JSONPlaceholder
-Method: GET
-Endpoint: /posts
-Response: JSON
-Available Records: 100 Posts
-Fields: userId, id, title, body
-API Endpoint
+The application connects to the JSONPlaceholder REST API.
+
+It sends an HTTP GET request to the /posts endpoint.
+
+The response is received in JSON format.
+
+The JSON data is converted into Dart model objects.
+
+The data is displayed on a clean black and red dashboard.
+
+The application uses FutureBuilder to handle asynchronous data.
+
+The latest successful result is stored locally.
+
+SharedPreferences is used for local storage.
+
+If the API is unavailable, cached data can be displayed.
+
+This gives the application a simple offline fallback.
+
+🎯 2. Assignment Objective
+The objective of this assignment is to build a Flutter application
+that can communicate with a public REST API.
+The application should fetch data from the API.
+
+The fetched data should be displayed using FutureBuilder.
+
+The latest successful result should be stored locally.
+
+SharedPreferences should be used for the local cache.
+
+The application should handle loading and error states.
+
+The application should provide a refresh option.
+
+The final interface should be simple, readable, and responsive.
+
+✨ 3. Main Features
+🌐 Public REST API integration
+⚡ Asynchronous data handling
+🔄 Refresh API data
+💾 Local caching
+📦 SharedPreferences storage
+📴 Cached data fallback
+⚠️ Error handling
+🔃 Pull-to-refresh
+🎨 Black and red dashboard
+📱 Responsive layout
+🧩 Dart model for API data
+🔐 Simple and organized data flow
+🌐 4. REST API Used
+This project uses JSONPlaceholder.
+JSONPlaceholder is a free REST API useful for testing and learning.
+
+The API endpoint used in this project is:
+
 https://jsonplaceholder.typicode.com/posts
-The API returns post objects similar to:
+API Information
+API Name: JSONPlaceholder
+Endpoint: /posts
+Method: GET
+Response Type: JSON
+Available Posts: 100
+Main Fields: userId, id, title, body
+🔎 5. Sample API Response
+A post returned by the API contains information like:
 {
   "userId": 1,
   "id": 1,
   "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
   "body": "quia et suscipit suscipit recusandae consequuntur expedita et cum"
 }
-🖥️ Application Interface
-The application uses a black and red developer-dashboard style theme.
-The dashboard contains:
+The response contains multiple post objects.
+The application converts these JSON objects into Dart objects.
 
-API status
-LIVE/CACHED indicator
-API information
+🧠 6. Basic Application Flow
+┌───────────────┐
+│  Open Flutter │
+│      App      │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│ fetchPosts()  │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│ HTTP GET      │
+│ REST API      │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│ JSON Response │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│ Post Model    │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│ FutureBuilder │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│ Display Posts │
+└───────────────┘
+⚡ 7. FutureBuilder
+FutureBuilder is used to manage the asynchronous API request.
+The API request takes some time to complete.
+
+FutureBuilder allows the UI to react to different states.
+
+The main states are:
+
+              FutureBuilder
+                   │
+        ┌──────────┼──────────┐
+        ↓          ↓          ↓
+     Waiting     Success     Error
+        │          │          │
+        ↓          ↓          ↓
+     Loading     Display    Check Cache
+                  Data          │
+                                ↓
+                         Cached Data?
+                           /                                Yes        No
+                          ↓          ↓
+                       Display     Error
+                        Cache       Screen
+⏳ 8. Loading State
+While the API request is running, the application shows a loading state.
+This prevents the user from seeing an empty screen.
+
+The loading indicator tells the user that data is being fetched.
+
+✅ 9. Success State
+When the API responds successfully:
+The response is checked.
+JSON is decoded.
+Post objects are created.
+The posts are displayed.
+The result is saved to local storage.
+The dashboard shows LIVE status.
+❌ 10. Error State
+If the API request fails, the application does not immediately stop.
+It checks SharedPreferences for previously saved data.
+
+If cached data exists, it is displayed.
+
+If there is no cached data, an error screen is shown.
+
+A retry action is available to try the API request again.
+
+💾 11. Local Cache
+The application uses SharedPreferences for caching.
+The cache stores the latest successful result.
+
+The post objects are converted into JSON strings before storage.
+
+This is necessary because SharedPreferences stores simple values.
+
+The stored strings can later be decoded back into Post objects.
+
+🔄 12. Cache Flow Diagram
+                 API REQUEST
+                      │
+              ┌───────┴───────┐
+              │               │
+           SUCCESS           FAILED
+              │               │
+              ↓               ↓
+       Save API Result    Check Cache
+              │               │
+              ↓          ┌────┴────┐
+        Display LIVE     │         │
+           Data        Found     Not Found
+                         │         │
+                         ↓         ↓
+                    Display     Show Error
+                    CACHED        Screen
+                     Data
+🟢 13. LIVE Data
+LIVE means the data currently displayed was received successfully
+from the REST API.
+The application saves this successful result for future use.
+
+The dashboard uses a LIVE indicator to make the data source clear.
+
+🟠 14. CACHED Data
+CACHED means the API request was not successful.
+The application then uses the last successful result stored locally.
+
+The cached result allows the user to continue viewing previously
+loaded information.
+
+🔁 15. Complete Data Flow
+User
+ │
+ ↓
+Flutter UI
+ │
+ ↓
+fetchPosts()
+ │
+ ↓
+HTTP GET
+ │
+ ↓
+JSONPlaceholder
+ │
+ ↓
+JSON Response
+ │
+ ↓
+jsonDecode()
+ │
+ ↓
+Post.fromJson()
+ │
+ ↓
+List<Post>
+ │
+ ↓
+FutureBuilder
+ │
+ ↓
+Display Posts
+ │
+ ↓
+SharedPreferences
+ │
+ ↓
+Local Cache
+🧩 16. Post Model
+The project uses a Post model to represent API data.
+The model contains four main properties:
+
+userId
+id
+title
+body
+The fromJson() method converts API JSON into a Post object.
+The toJson() method converts a Post object into JSON.
+
+This keeps the API data organized inside the Flutter application.
+
+🛠️ 17. Technologies Used
+Flutter
+Flutter is used to build the application interface.
+Dart
+Dart is used as the programming language.
+HTTP Package
+The HTTP package is used to send GET requests.
+SharedPreferences
+SharedPreferences is used for local caching.
+JSONPlaceholder
+JSONPlaceholder provides the public REST API.
+FutureBuilder
+FutureBuilder handles asynchronous API states.
+RefreshIndicator
+RefreshIndicator provides pull-to-refresh functionality.
+📦 18. Dependencies
+The project uses the following important packages:
+dependencies:
+  flutter:
+    sdk: flutter
+  http:
+  shared_preferences:
+The packages are installed using Flutter commands.
+flutter pub add http
+flutter pub add shared_preferences
+🎨 19. UI Design
+The application uses a black and red theme.
+The design is inspired by a simple developer dashboard.
+
+The main background is dark.
+
+Cards use a slightly lighter dark shade.
+
+Red is used for important actions and indicators.
+
+White is used for primary text.
+
+Grey is used for secondary information.
+
+The design keeps the interface readable and focused.
+
+🎨 20. Color Palette
+Background      #0B0B0B
+Cards           #151515
+Primary Red     #E50914
+Secondary Red   #FF3B3B
+Main Text       White
+Secondary Text  #999999
+Borders         #292929
+🖥️ 21. Dashboard Sections
+The dashboard contains the following sections:
+Application title
+Dashboard subtitle
+LIVE/CACHED status
+API Information card
+API name
 HTTP method
-Endpoint details
-Number of available records
-Local storage information
-Post list
+Endpoint
+Response type
+Available records
+Local storage
+Posts section
 Refresh action
-🎨 Theme
-Background: #0B0B0B
-Cards: #151515
-Primary Red: #E50914
-Secondary Red: #FF3B3B
-Main Text: White
-Secondary Text: #999999
-Borders: #292929
-📊 API Dashboard Information
-The application displays the following technical information:
+📊 22. API Information Display
+The dashboard shows:
 API
 JSONPlaceholder
 
@@ -106,101 +335,107 @@ AVAILABLE RECORDS
 
 LOCAL STORAGE
 SharedPreferences
-The JSONPlaceholder /posts endpoint provides 100 posts.
-For a cleaner dashboard interface, the application displays the first 10 posts, while the dashboard shows that 100 posts are available from the API.
+The API provides 100 posts.
+For a cleaner interface, the application displays the first 10 posts.
 
-⚙️ How the Application Works
-Step 1 — Send API Request
-The application sends an HTTP GET request:
-final response = await http.get(
-  Uri.parse('https://jsonplaceholder.typicode.com/posts'),
-);
-Step 2 — Check Response
-The response status code is checked before processing the data.
-if (response.statusCode == 200) {
-  // Process API response
-}
-Step 3 — Decode JSON
-The JSON response is decoded:
-final List<dynamic> data = jsonDecode(response.body);
-Step 4 — Convert Data into Model Objects
-The API data is converted into Post objects:
-final posts = data
-    .take(10)
-    .map((item) => Post.fromJson(item))
-    .toList();
-Step 5 — Display Data Using FutureBuilder
-FutureBuilder manages the asynchronous API operation.
-Waiting
-   ↓
-Loading Indicator
+The dashboard still shows that 100 posts are available from the API.
 
-Success
-   ↓
-Display Posts
-
-Error
-   ↓
-Check Local Cache
-⚡ FutureBuilder
-FutureBuilder is used because an API request does not complete immediately.
-The application handles three main states:
-
-Waiting: Shows a loading indicator.
-Success: Displays fetched posts.
-Error: Checks local cache and shows an error if no cache exists.
-This allows the UI to respond correctly while the API request is running.
-💾 Local Caching with SharedPreferences
-After a successful API request, the latest displayed posts are saved locally.
-The application uses:
-
-SharedPreferences
-for local storage.
-The posts are converted into JSON strings before saving:
-
-final encodedData = posts
-    .map((post) => jsonEncode(post.toJson()))
-    .toList();
-
-await prefs.setStringList(
-  'cached_posts',
-  encodedData,
-);
-When cached data is needed, the stored JSON strings are read and converted back into Post objects.
-📴 Cache Fallback
-The cache provides a fallback when the API cannot be reached.
-             API Request
-                  │
-          ┌───────┴───────┐
-          │               │
-       Success           Failed
-          │               │
-          ↓               ↓
-      Save Data       Check Cache
-          │               │
-          ↓          ┌────┴────┐
-      Show LIVE      │         │
-        Data       Found     Not Found
-                     │         │
-                     ↓         ↓
-               Show CACHED   Show Error
-LIVE
-LIVE means the current data was successfully received from the REST API.
-CACHED
-CACHED means the API request failed, so the last successful result stored in SharedPreferences is being displayed.
-🔄 Refresh Function
+🔄 23. Refresh Function
 The refresh button starts a new API request.
-The application also supports pull-to-refresh using:
+The user can request the latest data without restarting the app.
 
-RefreshIndicator
-This allows the user to request the latest API data without restarting the application.
-🧱 Project Structure
+The project also supports pull-to-refresh.
+
+Pull-to-refresh is implemented using RefreshIndicator.
+
+🧪 24. Testing
+The application was tested for the main assignment requirements.
+Test 1 — Launch Application
+Expected result:
+The dashboard should open successfully.
+
+Status:
+
+✅ Passed
+
+Test 2 — API Request
+Expected result:
+Posts should be fetched from JSONPlaceholder.
+
+Status:
+
+✅ Passed
+
+Test 3 — JSON Parsing
+Expected result:
+API data should be converted into Post objects.
+
+Status:
+
+✅ Passed
+
+Test 4 — FutureBuilder
+Expected result:
+Loading and success states should be handled.
+
+Status:
+
+✅ Passed
+
+Test 5 — Local Cache
+Expected result:
+Successful API data should be saved locally.
+
+Status:
+
+✅ Passed
+
+Test 6 — Cache Fallback
+Expected result:
+Cached data should appear if the API request fails.
+
+Status:
+
+✅ Passed
+
+Test 7 — Refresh
+Expected result:
+A new API request should be made.
+
+Status:
+
+✅ Passed
+
+Test 8 — Error Handling
+Expected result:
+An error and retry option should appear when no API
+and no cached data are available.
+
+Status:
+
+✅ Passed
+
+🛡️ 25. Error Handling Flow
+API Request
+     │
+     ↓
+Response Received?
+     │
+ ┌───┴────┐
+Yes       No
+ │         │
+ ↓         ↓
+Success  Load Cache
+ │         │
+ ↓      ┌──┴───┐
+Save    │      │
+Cache  Yes     No
+ │      │       │
+ ↓      ↓       ↓
+LIVE  CACHED  ERROR
+📂 26. Project Structure
 assignment_8/
 │
-├── lib/
-│   └── main.dart
-│
-├── test/
 ├── android/
 ├── ios/
 ├── linux/
@@ -208,174 +443,223 @@ assignment_8/
 ├── web/
 ├── windows/
 │
-├── pubspec.yaml
-├── pubspec.lock
-├── analysis_options.yaml
+├── lib/
+│   └── main.dart
+│
+├── test/
+│
 ├── .gitignore
+├── analysis_options.yaml
+├── pubspec.lock
+├── pubspec.yaml
 └── README.md
-The main application logic is implemented in:
+📄 27. Main File
+The main application code is inside:
 lib/main.dart
-📦 Packages Used
-http
-Used to communicate with the REST API.
-http:
-It is used for:
-Sending HTTP requests
-Receiving API responses
-Checking response status codes
-Processing API data
-shared_preferences
-Used for local caching.
-shared_preferences:
-It is used for:
-Saving the latest API result
-Retrieving cached data
-Providing a simple offline fallback
-🚀 Getting Started
+The file contains:
+App configuration
+PostsScreen
+API request logic
+Cache functions
+Refresh logic
+FutureBuilder
+Loading UI
+Error UI
+API information cards
+Post cards
+Post model
+🚀 28. Getting Started
 Prerequisites
-Make sure Flutter is installed.
-Check your Flutter setup:
+Install Flutter before running the project.
+Check Flutter installation:
 
 flutter doctor
-1. Clone the Repository
+📥 29. Clone the Repository
 git clone https://github.com/Nupurbhoir/FLUTTER-Assignment-8-API-Data-Fetcher-with-Local-Cache.git
-Then enter the project folder:
+Open the project folder:
 cd FLUTTER-Assignment-8-API-Data-Fetcher-with-Local-Cache
-2. Install Dependencies
+📦 30. Install Dependencies
+Run:
 flutter pub get
-3. Run the Application
+▶️ 31. Run the Application
 For Chrome:
 flutter run -d chrome
 For Android:
 flutter run
-🧪 Testing
-Testing Results
-Launch application — Dashboard opens — ✅ Passed
-API request — Posts are fetched — ✅ Passed
-JSON parsing — API data is converted correctly — ✅ Passed
-FutureBuilder loading — Loading indicator appears — ✅ Passed
-Post display — Post information is visible — ✅ Passed
-Refresh button — New API request is made — ✅ Passed
-Local cache — Successful result is stored — ✅ Passed
-Cached fallback — Previous data is displayed if API fails — ✅ Passed
-Error without cache — Error screen appears — ✅ Passed
-Retry button — API request can be attempted again — ✅ Passed
-Pull-to-refresh — Data refreshes — ✅ Passed
-🧠 What I Learned
-This assignment helped me understand how API integration works in Flutter.
-REST API
-I learned how a Flutter application can communicate with an external REST API using an HTTP request.
-JSON Parsing
-I learned how to decode JSON data and convert it into Dart objects using a model class.
-FutureBuilder
-I understood how FutureBuilder can be used to display different UI states while an asynchronous operation is running.
-SharedPreferences
-I learned how to store small amounts of data locally using SharedPreferences and retrieve that data later.
-Caching
-I learned how a local cache can be used to show the last successful result when the API is temporarily unavailable.
-Error Handling
-I learned that an API-based application should handle loading, success, and failure states instead of assuming that the network request will always work.
-🛠️ Problems Faced
-1. Flutter Project Directory
-Initially, the Flutter project was inside a nested folder. Because the terminal was opened in the outer folder, Flutter could not find pubspec.yaml.
-Solution: I moved into the actual Flutter project directory before running Flutter package commands.
-
-2. API Data Is Asynchronous
-The API response does not arrive immediately.
-Solution: I used FutureBuilder to handle the waiting state and display the data after the request completed.
-
-3. Storing API Data
-SharedPreferences does not directly store custom Dart objects.
-Solution: I converted the Post objects into JSON strings before saving them and decoded them again when reading the cache.
-
-4. API Failure
-The API may temporarily fail because of network problems.
-Solution: I added a cache fallback so the application can display the previous successful result.
-
-🔑 Key Concepts Demonstrated
+💻 32. Development Environment
+The project was developed using:
+VS Code
 Flutter
-   │
-   ├── StatefulWidget
-   ├── Future
-   ├── FutureBuilder
-   ├── HTTP GET
-   ├── REST API
-   ├── JSON
-   ├── Model Class
-   ├── SharedPreferences
-   ├── Local Cache
-   ├── Error Handling
-   └── RefreshIndicator
-📈 Data Flow
-User Opens App
-      ↓
-fetchPosts()
-      ↓
-HTTP GET Request
-      ↓
-JSONPlaceholder
-      ↓
-JSON Response
-      ↓
-jsonDecode()
-      ↓
-Post Objects
-      ↓
+Dart
+Chrome for Flutter Web testing
+Git and GitHub
+🧠 33. Problems Faced
+Problem 1 — Wrong Project Directory
+Initially, Flutter package commands were executed from the outer
+folder instead of the actual Flutter project root.
+Solution
+The terminal was moved into the folder containing pubspec.yaml.
+Problem 2 — Asynchronous API Data
+API data is not available immediately.
+Solution
+FutureBuilder was used to manage the asynchronous operation.
+Problem 3 — Saving Custom Objects
+SharedPreferences does not directly store custom Dart objects.
+Solution
+Post objects were converted into JSON strings before saving.
+Problem 4 — API Failure
+The API may fail because of a network problem.
+Solution
+The application loads the last successful result from cache.
+📚 34. What I Learned
+Through this assignment, I learned how to connect Flutter with a REST API.
+I learned how to send HTTP GET requests.
+
+I learned how to work with JSON responses.
+
+I learned how to create Dart model classes.
+
+I learned how FutureBuilder manages asynchronous data.
+
+I learned how SharedPreferences stores local data.
+
+I learned how caching can provide a simple offline fallback.
+
+I learned how to handle loading and error states.
+
+I learned how to implement refresh functionality.
+
+I also improved my understanding of structuring a Flutter UI.
+
+🔑 35. Key Concepts
+REST API
+   ↓
+HTTP GET
+   ↓
+JSON
+   ↓
+Dart Model
+   ↓
+Future
+   ↓
 FutureBuilder
-      ↓
-Display First 10 Posts
-      ↓
-Save Result
-      ↓
+   ↓
+Flutter UI
+   ↓
 SharedPreferences
-If the request fails:
-API Failed
-    ↓
-Load SharedPreferences
-    ↓
-Cached Data Found?
-   ↙          ↘
- YES           NO
-  ↓             ↓
-Show Cache    Error Screen
-🔐 Note About the Cache
-The cache stores the latest successfully fetched result used by the application.
-It is intended as a simple local cache for this assignment and is not a replacement for a full database.
-
-📚 Learning Outcome
-After completing this project, I was able to:
-Connect Flutter to a REST API
-Make HTTP GET requests
-Work with JSON responses
-Create and use model classes
-Handle asynchronous operations
-Use FutureBuilder
-Store data locally
-Implement a simple cache
-Handle API failures
-Refresh API data
-Build a clean dashboard interface
-🔗 GitHub Repository
-The complete Flutter project is available here:
+   ↓
+Local Cache
+📈 36. Application Architecture
+┌──────────────────────────────────┐
+│            Flutter UI            │
+│                                  │
+│  Header • Status • API • Posts   │
+└────────────────┬─────────────────┘
+                 │
+                 ↓
+┌──────────────────────────────────┐
+│          FutureBuilder           │
+│                                  │
+│    Loading • Success • Error     │
+└───────────────┬──────────────────┘
+                │
+       ┌────────┴────────┐
+       ↓                 ↓
+┌──────────────┐  ┌────────────────┐
+│ REST API     │  │ SharedPrefs    │
+│ JSONPlaceholder│ │ Local Cache    │
+└──────────────┘  └────────────────┘
+🔗 37. GitHub Repository
+The complete project is available on GitHub.
 Repository:
-https://github.com/Nupurbhoir/FLUTTER-Assignment-8-API-Data-Fetcher-with-Local-Cache.git
 
-👩‍💻 Author
+https://github.com/Nupurbhoir/FLUTTER-Assignment-8-API-Data-Fetcher-with-Local-Cache
+
+The repository contains the Flutter project files and README documentation.
+
+👩‍💻 38. Author
 Nupur Bhoir
 B.Tech Computer Science Engineering
+
 ITM Skills University
 
-🎓 Assignment Details
+🎓 39. Assignment Details
 Assignment: 8
 Topic: API Data Fetcher with Local Cache
-Framework: Flutter
-Language: Dart
-API: JSONPlaceholder
-Local Storage: SharedPreferences
-📌 Original Assignment Requirement
-Fetch data from a public REST API (e.g., JSONPlaceholder), display it with FutureBuilder, and cache the last result using SharedPreferences.
-⭐ Project Summary
-This project demonstrates a complete basic API workflow in Flutter:
-Fetch → Parse → Display → Cache → Reuse
 
-The application combines REST API integration, asynchronous UI handling, local storage, error handling, and a clean dashboard interface in one practical Flutter project.
+Framework: Flutter
+
+Language: Dart
+
+API: JSONPlaceholder
+
+Storage: SharedPreferences
+
+📌 40. Original Requirement
+Fetch data from a public REST API, such as JSONPlaceholder,
+display it with FutureBuilder, and cache the last result using
+SharedPreferences.
+⭐ 41. Final Project Summary
+The project demonstrates a complete Flutter API workflow.
+FETCH
+  ↓
+PARSE
+  ↓
+DISPLAY
+  ↓
+CACHE
+  ↓
+REUSE
+The application successfully combines:
+REST API integration
+JSON parsing
+FutureBuilder
+SharedPreferences
+Local caching
+Error handling
+Refresh functionality
+Responsive UI
+The project provides a practical introduction to connecting
+Flutter applications with external APIs.
+It also demonstrates how local caching can improve the user
+experience when the network is temporarily unavailable.
+
+🏁 42. Conclusion
+API Data Fetcher successfully fulfills the requirements of
+Flutter Assignment 8.
+The application fetches post data from JSONPlaceholder.
+
+The data is displayed using FutureBuilder.
+
+The latest successful result is stored using SharedPreferences.
+
+When the API fails, cached data can be displayed.
+
+The project helped in understanding API integration,
+asynchronous programming, local storage, caching, and
+error handling in Flutter.
+
+❤️ 43. Project Workflow
+        USER OPENS APP
+              │
+              ↓
+        FETCH API DATA
+              │
+              ↓
+        PARSE JSON DATA
+              │
+              ↓
+       CREATE POST OBJECTS
+              │
+              ↓
+       DISPLAY USING FLUTTER
+              │
+              ↓
+        SAVE LOCAL CACHE
+              │
+              ↓
+       READY FOR NEXT REQUEST
+🚀 Final Result
+Fetch → Parse → Display → Cache → Reuse
+This project represents the complete learning outcome of
+Assignment 8.

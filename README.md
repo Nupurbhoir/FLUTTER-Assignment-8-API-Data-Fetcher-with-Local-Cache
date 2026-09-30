@@ -4,6 +4,7 @@
 
 A Flutter application that fetches posts from a public REST API, displays them using `FutureBuilder`, and stores the latest successful result locally using `SharedPreferences`.
 
+This is the deploy link : https://ml-roadaccidentseverity-21.streamlit.app/
 ---
 
 ## 📌 Project Overview
